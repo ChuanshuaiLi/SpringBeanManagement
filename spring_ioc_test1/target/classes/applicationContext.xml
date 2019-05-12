@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- UserService的创建权交给了Spring -->
+    <!--    <bean id="userService" class="com.imooc.ioc.demo1.UserServiceImpl">-->
+    <!--        &lt;!&ndash;       DI 依赖注入&ndash;&gt;-->
+    <!--        <property name="name" value="李四"></property>-->
+    <!--    </bean>-->
+
+    <!--    Bean的实例化的三种方式-->
+    <!--    第1种：无参构造器的方式-->
+    <!--    <bean id="bean1" class="com.imooc.ioc.demo2.Bean1"></bean>-->
+    <!--    &lt;!&ndash;    第2种：静态工厂的方式&ndash;&gt;-->
+    <!--    <bean id="bean2" class="com.imooc.ioc.demo2.Bean2Factory" factory-method="createBean2"></bean>-->
+    <!--    &lt;!&ndash;    第3种：实例工厂的方式&ndash;&gt;-->
+    <!--    &lt;!&ndash;    id和name差不多，但是name可以用来表示包含特殊字符的名称，而id不可以&ndash;&gt;-->
+    <!--    <bean name="bean3Factory" class="com.imooc.ioc.demo2.Bean3Factory"/>-->
+    <!--    <bean name="bean3" factory-bean="bean3Factory" factory-method="createBean3"/>-->
+
+    <!-- bean的作用域 -->
+    <!--    <bean id="person" class="com.imooc.ioc.demo3.Person"></bean>-->
+
+    <!--    &lt;!&ndash;    bean的生命周期&ndash;&gt;-->
+    <!--    <bean id="man" class="com.imooc.ioc.demo3.Man" init-method="setup" destroy-method="teardown"></bean>-->
+
+    <!--    <bean class="com.imooc.ioc.demo3.MyBeanPostProcessor"></bean>-->
+
+    <!--    <bean id="userDao" class="com.imooc.ioc.demo3.UserDaoImpl"></bean>-->
+
+    <!--    Bean的构造方法的属性注入-->
+    <bean id="user" class="com.imooc.ioc.demo4.User">
+        <constructor-arg name="name" value="张三"></constructor-arg>
+        <constructor-arg name="age" value="16"></constructor-arg>
+    </bean>
+    <!--    &lt;!&ndash;    Bean的set方法的属性注入&ndash;&gt;-->
+    <!--    <bean id="person" class="com.imooc.ioc.demo4.Person">-->
+    <!--        &lt;!&ndash;        普通类型使用value&ndash;&gt;-->
+    <!--        <property name="name" value="李四"></property>-->
+    <!--        <property name="age" value="16"></property>-->
+    <!--        &lt;!&ndash;        对象类型使用ref&ndash;&gt;-->
+    <!--        <property name="cat" ref="cat"></property>-->
+    <!--    </bean>-->
+    <!--    <bean id="cat" class="com.imooc.ioc.demo4.Cat">-->
+    <!--        <property name="name" value="kity"></property>-->
+    <!--    </bean>-->
+
+    <!--    p名称空间的属性注入-->
+    <bean id="person" class="com.imooc.ioc.demo4.Person" p:name="彦祖" p:age="18" p:cat-ref="cat"></bean>
+    <bean id="cat" class="com.imooc.ioc.demo4.Cat" p:name="kity"></bean>
+    <!--    Bean的SpEL属性注入-->
+    <bean id="category" class="com.imooc.ioc.demo4.Category">
+        <property name="name" value="#{'服装'}"></property>
+    </bean>
+    <bean id="product" class="com.imooc.ioc.demo4.Product">
+        <property name="name" value="#{'男装'}"></property>
+        <!--        使用函数-->
+        <property name="price" value="#{productInfo.calculatePrice()}"></property>
+        <!--        使用别的对象-->
+        <property name="category" value="#{category}"></property>
+    </bean>
+
+    <bean id="productInfo" class="com.imooc.ioc.demo4.ProductInfo"></bean>
+
+    <!--    复杂类型的集合注入-->
+    <bean id="collectionBean" class="com.imooc.ioc.demo5.CollectionBean">
+        <!--        数组类型-->
+        <property name="arrs">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>ccc</value>
+            </list>
+        </property>
+        <!--        list类型-->
+        <property name="list">
+            <list>
+                <value>111</value>
+                <value>222</value>
+                <value>333</value>
+            </list>
+        </property>
+        <!--        set类型-->
+        <property name="set">
+            <set>
+                <value>text</value>
+                <value>text</value>
+                <value>text</value>
+            </set>
+        </property>
+
+        <!--        map类型-->
+        <property name="map">
+            <map>
+                <entry key="aaa" value="111"></entry>
+                <entry key="bbb" value="222"></entry>
+                <entry key="ccc" value="333"></entry>
+            </map>
+        </property>
+
+        <!--        properties类型-->
+        <property name="properties">
+            <props>
+                <prop key="username">root</prop>
+                <prop key="password">mima</prop>
+
+            </props>
+        </property>
+    </bean>
+</beans>
